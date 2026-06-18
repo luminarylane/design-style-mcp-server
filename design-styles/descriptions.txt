@@ -1,0 +1,59 @@
+Monochrome - A stark, editorial design system built on pure black and white. No accent colors—just dramatic contrast, oversized serif typography, and precise geometric layouts. Evokes high-end fashion editorials and architectural portfolios. Austere, sophisticated, unapologetically bold. - https://www.designprompts.dev/monochrome
+
+Bauhaus - Bold geometric modernism with circles, squares, and triangles. Primary color palette (Red/Blue/Yellow) with stark black borders and hard shadows. Functional yet artistic with constructivist asymmetry. - https://www.designprompts.dev/bauhaus
+
+Modern Dark - A cinematic, high-precision dark mode design featuring layered ambient lighting through animated gradient blobs, mouse-tracking spotlight effects, and meticulously crafted micro-interactions that feel like premium software. - https://www.designprompts.dev/modern-dark
+
+Newsprint - Stark black and white, high contrast, tight grids, newspaper aesthetic, sharp lines, editorial depth. - https://www.designprompts.dev/newsprint
+
+SaaS - A bold, minimalist-modern visual system combining clean aesthetics with dynamic execution. Features signature Electric Blue gradients, sophisticated dual-font pairing (Calistoga + Inter), animated hero graphics, inverted contrast sections, and micro-interactions throughout. Professional yet design-forward—confidence without clutter. - https://www.designprompts.dev/saas
+
+Luxury - Elegant serif typography with monochromatic palette and gold accents. Ultra-slow animations, generous white space, and architectural precision. High-end fashion magazine editorial aesthetic with depth through subtle shadows and layering. - https://www.designprompts.dev/luxury
+
+Terminal - A raw, functional, and retro-futuristic command-line interface aesthetic. High contrast, monospaced precision, and blinking cursors. - https://www.designprompts.dev/terminal
+
+Swiss Minimalist - A rigorous implementation of the International Typographic Style (1950s). Characterized by objective typography, sans-serif fonts (Inter), mathematical grids with subtle texture patterns, and a strict black/white/red palette. Prioritizes readability, precision, asymmetrical organization, and visual depth through layered patterns. - https://www.designprompts.dev/swiss-minimalist
+
+Kinetic - Motion-first design where typography is the primary visual medium. Features infinite marquees, viewport-scaled text, scroll-triggered animations, and aggressive uppercase styling. High contrast, brutalist energy with rhythmic movement. - https://www.designprompts.dev/kinetic
+
+Flat Design - A design philosophy centered on removing depth cues (shadows, bevels, gradients) in favor of pure color, typography, and layout. Crisp, two-dimensional, and geometric with bold color blocking. - https://www.designprompts.dev/flat-design
+
+Art Deco - 1920s Gatsby elegance, geometric precision, metallic gold accents, architectural symmetry, luxury heritage - https://www.designprompts.dev/art-deco
+
+Material - Playful, dynamic color extraction, pill-shaped buttons, and distinct elevation states. Based on Google's Material Design 3 with enhanced depth and micro-interactions. - https://www.designprompts.dev/material-design
+
+Neo Brutalism - A raw, high-contrast aesthetic that mimics print design and DIY punk culture. Characterized by cream backgrounds, thick black borders (4px), hard offset shadows with zero blur, clashing vibrant colors (Hot Red, Vivid Yellow, Soft Violet), and Space Grotesk typography at heavy weights. Embraces asymmetry, rotation, sticker-like layering, and organized visual chaos. - https://www.designprompts.dev/neo-brutalism
+
+Bold Typography - Type-driven design that treats massive typography as the primary visual element. Ultra-large headlines, extreme contrast, and dramatic negative space create poster-like compositions where words become art. - https://www.designprompts.dev/bold-typography
+
+Academia - University aesthetic, old libraries, warm paper textures, traditional serifs, gold/crimson accents. - https://www.designprompts.dev/academia
+
+Cyberpunk - High contrast neon on black, glitch animations, terminal/monospace fonts, tech-oriented decorations. A dystopian digital aesthetic inspired by 80s sci-fi and hacker culture. - https://www.designprompts.dev/cyberpunk
+
+Web3 - A bold, futuristic aesthetic inspired by Bitcoin and decentralized finance. Deep void backgrounds with Bitcoin orange accents, golden highlights, glowing elements, and precision data visualization. - https://www.designprompts.dev/web3
+
+Playful Geometric - A vibrant, high-energy aesthetic that combines a stable structural grid with whimsical geometric decorations. It relies on bright solid colors, simple primitive shapes (circles, triangles, squiggles), and tactile interactions to create a friendly, optimistic vibe reminiscent of modern Memphis design. - https://www.designprompts.dev/playful-geometric
+
+Minimal Dark - An atmospheric dark mode design system built on deep slate tones with warm amber accents. Features ambient glow effects, glass-like translucent cards, geometric typography, and generous breathing room. Ethereal yet grounded—like a premium app at midnight. - https://www.designprompts.dev/minimal-dark
+
+Claymorphism - A hyper-realistic 3D aesthetic simulating soft, inflatable clay objects with multi-layered shadow stacks, vibrant candy-store colors, tactile micro-interactions, and organic floating ambient elements that create a premium, playful digital toy experience. - https://www.designprompts.dev/claymorphism
+
+Professional - An editorial-inspired minimalist design system centered on elegant serif typography. Warm ivory backgrounds with subtle paper texture, refined spacing, rule lines, and classical proportions create a timeless, literary aesthetic. Enhanced depth through layered gradients and multi-toned shadows. The design whispers sophistication through restraint and typographic excellence. - https://www.designprompts.dev/professional
+
+Botanical - Soft, earthy, elegant design inspired by nature. Features organic shapes, generous rounded corners, paper grain texture, muted earth tones, and sophisticated serif typography that breathes warmth and natural luxury. - https://www.designprompts.dev/botanical
+
+Vaporwave - A nostalgic, neon-drenched journey into 80s retro-futurism. High-contrast neon pinks and cyans against deep void purples. Digital grids, glowing horizons, surreal sunset gradients, and CRT scanline overlays create an immersive synthetic world. - https://www.designprompts.dev/vaporwave
+
+Enterprise - Modern SaaS aesthetic balancing professionalism with approachability. Vibrant indigo/violet gradients, soft colored shadows, isometric depth, and clean geometric sans-serif typography. - https://www.designprompts.dev/enterprise
+
+Sketch - Organic wobbly borders, handwritten typography, paper textures, and playful imperfection. Every element feels sketched with markers and pencils on textured paper. - https://www.designprompts.dev/sketch
+
+Industrial - A high-fidelity industrial skeuomorphism aesthetic inspired by Dieter Rams and Teenage Engineering. Features tactile neumorphic elements, matte plastic surfaces, and safety-orange accents. Every component mimics physical hardware with realistic lighting, mechanical interactions, and manufacturing details like screws, vents, and LED indicators. - https://www.designprompts.dev/industrial
+
+Neumorphism - Extruded and inset elements via dual shadows on monochromatic backgrounds. Soft, tactile, and physically grounded with excellent accessibility. - https://www.designprompts.dev/neumorphism
+
+Organic - Earth-inspired palette with moss greens, terracotta, and sand tones. Features organic blob shapes, grain texture overlays, asymmetric rounded corners, and soft shadows. Embraces wabi-sabi philosophy with warmth and natural imperfection. - https://www.designprompts.dev/organic
+
+Maximalism - Clashing patterns, dense layouts, oversaturated colors, intentional visual clutter. MORE IS MORE. - https://www.designprompts.dev/maximalism
+
+Retro - Ugly-cool 90s nostalgia aesthetic with Windows 95 beveled UI, system fonts, bright primary colors, marquee scrolling text, and maximum visual chaos. - https://www.designprompts.dev/retro
