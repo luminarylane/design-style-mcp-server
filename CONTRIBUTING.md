@@ -5,10 +5,12 @@ Thank you for your interest in contributing! This guide will help you get starte
 ## Development Setup
 
 ### Prerequisites
+
 - Node.js 18+
 - Git
 
 ### Installation
+
 ```bash
 git clone https://github.com/luminarylane/design-style-mcp-server.git
 cd design-style-mcp-server
@@ -18,20 +20,24 @@ npm install
 ## Development Workflow
 
 ### 1. Create a Branch
+
 ```bash
 git checkout -b feature/your-description
 ```
 
 ### 2. Make Changes
+
 Follow the existing code style and conventions.
 
 ### 3. Build & Test
+
 ```bash
 npm run build
 npx tsc --noEmit
 ```
 
 ### 4. Push and Create PR
+
 ```bash
 git push origin your-branch-name
 gh pr create --title "Description" --body "Details..."

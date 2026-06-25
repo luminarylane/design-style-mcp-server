@@ -12,10 +12,10 @@ No AI inference — pure deterministic scoring against style characteristics.
 
 ### Tools
 
-| Tool | Description |
-|------|-------------|
+| Tool              | Description                                                                                                                                                                        |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `recommend_style` | Deterministic style recommendation based on brand context, campaign objective, target demographic, and season. Returns a top match with scoring reasoning and ranked alternatives. |
-| `get_style` | Retrieve structured design tokens for a given style slug: name, description, color palette, typography, mood, visual directives, and negative prompt sections. |
+| `get_style`       | Retrieve structured design tokens for a given style slug: name, description, color palette, typography, mood, visual directives, and negative prompt sections.                     |
 
 ### Included Styles (30)
 
@@ -85,8 +85,8 @@ Output: { name, description, colors, typography, mood, promptAdditions, negative
 
 ## Configuration
 
-| Env Var | Default | Description |
-|---------|---------|-------------|
+| Env Var              | Default                                 | Description                                       |
+| -------------------- | --------------------------------------- | ------------------------------------------------- |
 | `DESIGN_STYLES_PATH` | `./design-styles` (relative to package) | Override path to the design-styles data directory |
 
 ## Architecture

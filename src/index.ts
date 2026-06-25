@@ -88,7 +88,8 @@ server.registerTool(
       const msg = extractErrorMessage(e);
       console.error(`[recommend_style] Error: ${msg}`);
 
-      if (msg.includes("descriptions.txt")) return styleDataUnavailableError(msg);
+      if (msg.includes("descriptions.txt"))
+        return styleDataUnavailableError(msg);
 
       return errorResult("RECOMMENDATION_FAILED", msg, {
         action:
@@ -135,7 +136,8 @@ server.registerTool(
       const msg = extractErrorMessage(e);
       console.error(`[get_style] Error: ${msg}`);
 
-      if (msg.includes("descriptions.txt")) return styleDataUnavailableError(msg);
+      if (msg.includes("descriptions.txt"))
+        return styleDataUnavailableError(msg);
 
       if (msg.includes("Failed to read prompt")) {
         return errorResult("PROMPT_FILE_MISSING", msg, {
