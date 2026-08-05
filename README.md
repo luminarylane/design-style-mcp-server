@@ -21,7 +21,7 @@ No AI inference — pure deterministic scoring against style characteristics.
 
 academia, art-deco, bauhaus, bold-typography, botanical, claymorphism, cyberpunk, enterprise, flat-design, industrial, kinetic, luxury, material, maximalism, minimal-dark, modern-dark, monochrome, neo-brutalism, neumorphism, newsprint, organic, playful-geometric, professional, retro, saas, sketch, swiss-minimalist, terminal, vaporwave, web3
 
-Each style includes a full prompt file with design philosophy, color system, typography rules, visual directives, and negative prompts — sourced from [designprompts.dev](https://www.designprompts.dev/).
+Each style includes a full prompt file with design philosophy, color system, typography rules, visual directives, and negative prompts.
 
 ## Quick Start
 
@@ -130,3 +130,7 @@ npm run build
 ## License
 
 [MIT](LICENSE)
+
+## Credits
+
+The design-style prompt collection was inspired by and initially sourced from [designprompts.dev](https://www.designprompts.dev/). This project is an independent MCP server and is not affiliated with or endorsed by designprompts.dev.
