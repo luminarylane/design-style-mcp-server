@@ -2,8 +2,8 @@
 /**
  * Standalone Design Style MCP Server
  *
- * Provides style intelligence for AI content generation workflows.
- * Pure filesystem reads + deterministic scoring — no AI inference.
+ * Provides style intelligence for Lane's ACT subagents when generating
+ * campaign media via fal.ai. Pure filesystem reads + deterministic scoring.
  *
  * Tools:
  *   - recommend_style: Deterministic style recommendation based on brand context
@@ -13,6 +13,8 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
+import logger from "./lib/logger.js";
+import { getSessionTrace, flushLangfuse, shutdownLangfuse } from "./lib/langfuse.js";
 import { textResult, errorResult } from "./response.js";
 import {
   recommendStyle,
@@ -75,26 +77,31 @@ server.registerTool(
     },
   },
   async (args) => {
-    console.error(
+    const trace = getSessionTrace("design-style-mcp-server");
+    const span = trace?.span({ name: "tool:recommend_style", input: args });
+    logger.error(
       `[recommend_style] → objective=${args.objective} demographic=${args.demographic} brand=${args.brand ?? "(none)"} season=${args.season ?? "(none)"}`,
     );
     try {
       const result = await recommendStyle(args);
-      console.error(
+      logger.error(
         `[recommend_style] ← ${result.style} (${result.isDefault ? "default fallback" : "matched"}) + ${result.alternatives.length} alternatives`,
       );
+      span?.update({ output: result });
       return textResult(result);
     } catch (e) {
       const msg = extractErrorMessage(e);
-      console.error(`[recommend_style] Error: ${msg}`);
+      logger.error(`[recommend_style] Error: ${msg}`);
+      span?.update({ output: { error: msg }, level: "ERROR" });
 
-      if (msg.includes("descriptions.txt"))
-        return styleDataUnavailableError(msg);
+      if (msg.includes("descriptions.txt")) return styleDataUnavailableError(msg);
 
       return errorResult("RECOMMENDATION_FAILED", msg, {
         action:
           "RETRY_ONCE: Unexpected error during scoring. Retry this call once. If it fails again, fall back to using style slug 'professional' with get_style.",
       });
+    } finally {
+      span?.end();
     }
   },
 );
@@ -114,11 +121,14 @@ server.registerTool(
     },
   },
   async (args) => {
-    console.error(`[get_style] → slug=${args.style}`);
+    const trace = getSessionTrace("design-style-mcp-server");
+    const span = trace?.span({ name: "tool:get_style", input: args });
+    logger.error(`[get_style] → slug=${args.style}`);
     try {
       const tokens = await getStyleTokens(args.style);
       if (!tokens) {
-        console.error(`[get_style] ← invalid slug: ${args.style}`);
+        logger.error(`[get_style] ← invalid slug: ${args.style}`);
+        span?.update({ output: { error: "invalid slug" }, level: "WARNING" });
         return errorResult(
           "INVALID_STYLE_SLUG",
           `'${args.style}' is not a recognized design style slug.`,
@@ -128,16 +138,16 @@ server.registerTool(
           },
         );
       }
-      console.error(
+      logger.error(
         `[get_style] ← ${tokens.name} (colors=${tokens.colors ? "yes" : "no"} mood=${tokens.mood ? "yes" : "no"} typography=${tokens.typography ? "yes" : "no"})`,
       );
+      span?.update({ output: tokens });
       return textResult(tokens);
     } catch (e) {
       const msg = extractErrorMessage(e);
-      console.error(`[get_style] Error: ${msg}`);
+      logger.error(`[get_style] Error: ${msg}`);
 
-      if (msg.includes("descriptions.txt"))
-        return styleDataUnavailableError(msg);
+      if (msg.includes("descriptions.txt")) return styleDataUnavailableError(msg);
 
       if (msg.includes("Failed to read prompt")) {
         return errorResult("PROMPT_FILE_MISSING", msg, {
@@ -146,29 +156,28 @@ server.registerTool(
         });
       }
 
+      span?.update({ output: { error: msg }, level: "ERROR" });
       return errorResult("STYLE_RETRIEVAL_FAILED", msg, {
         action:
           "RETRY_ONCE: Unexpected error during style retrieval. Retry this call once. If it fails again, call recommend_style to get an alternative style slug.",
       });
+    } finally {
+      span?.end();
     }
   },
 );
 
 // --- Start ---
 
-export { server };
-
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error("Design Style MCP Server running on stdio");
+  logger.error("Design Style MCP Server running on stdio");
 }
 
-const isDirectRun =
-  process.argv[1] && import.meta.url === `file://${process.argv[1]}`;
-if (isDirectRun) {
-  main().catch((e) => {
-    console.error("Fatal:", e);
-    process.exit(1);
-  });
-}
+main().catch(async (e) => {
+  logger.error({ err: e }, "Fatal");
+  await flushLangfuse();
+  await shutdownLangfuse();
+  process.exit(1);
+});
