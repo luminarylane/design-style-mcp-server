@@ -1,13 +1,15 @@
 /**
  * Design Style data loading, extraction, and recommendation engine.
  *
- * Pure filesystem reads + deterministic scoring. No AI inference.
+ * Copies essential logic from src/web/src/lib/design-styles/ to keep
+ * this MCP server standalone with zero cross-package coupling.
  */
 
 import fs from "node:fs/promises";
 import path from "node:path";
+import logger from "./lib/logger.js";
 
-// --- Slugs & Validation ---
+// --- Slugs & Validation (copied from web lib types.ts) ---
 
 export const DESIGN_STYLE_SLUGS = [
   "academia",
@@ -48,7 +50,7 @@ export function isValidDesignStyleSlug(slug: string): slug is DesignStyleSlug {
   return DESIGN_STYLE_SLUGS.includes(slug as DesignStyleSlug);
 }
 
-// --- Style Characteristics ---
+// --- Style Characteristics (copied from web lib index.ts:264-426) ---
 
 export const STYLE_CHARACTERISTICS: Partial<
   Record<
@@ -77,14 +79,7 @@ export const STYLE_CHARACTERISTICS: Partial<
   "neo-brutalism": {
     objectives: ["brand_awareness", "engagement", "viral_content"],
     demographics: ["gen_z", "millennials", "creatives", "18-35"],
-    industries: [
-      "creative",
-      "fashion",
-      "music",
-      "entertainment",
-      "streetwear",
-      "athletic",
-    ],
+    industries: ["creative", "fashion", "music", "entertainment", "streetwear", "athletic"],
     moods: ["bold", "rebellious", "energetic", "playful"],
   },
   luxury: {
@@ -114,13 +109,7 @@ export const STYLE_CHARACTERISTICS: Partial<
       "conversion",
     ],
     demographics: ["design_conscious", "tech_savvy", "25-45"],
-    industries: [
-      "tech",
-      "design",
-      "premium_products",
-      "apps",
-      "consumer_electronics",
-    ],
+    industries: ["tech", "design", "premium_products", "apps", "consumer_electronics"],
     moods: ["premium", "sleek", "modern", "focused", "minimal"],
   },
   vaporwave: {
@@ -245,25 +234,13 @@ export const STYLE_CHARACTERISTICS: Partial<
     objectives: ["thought_leadership", "credibility", "trust_building"],
     demographics: ["academics", "professionals", "educated", "35-65"],
     industries: ["education", "research", "publishing", "university", "legal"],
-    moods: [
-      "scholarly",
-      "prestigious",
-      "timeless",
-      "dignified",
-      "intellectual",
-    ],
+    moods: ["scholarly", "prestigious", "timeless", "dignified", "intellectual"],
   },
   bauhaus: {
     objectives: ["brand_awareness", "engagement", "premium_positioning"],
     demographics: ["design_conscious", "creatives", "architects", "25-55"],
     industries: ["architecture", "design", "art", "gallery", "museum"],
-    moods: [
-      "constructivist",
-      "geometric",
-      "modernist",
-      "bold",
-      "architectural",
-    ],
+    moods: ["constructivist", "geometric", "modernist", "bold", "architectural"],
   },
   "bold-typography": {
     objectives: ["brand_awareness", "engagement", "viral_content"],
@@ -272,42 +249,15 @@ export const STYLE_CHARACTERISTICS: Partial<
     moods: ["bold", "dramatic", "confident", "impactful", "editorial"],
   },
   industrial: {
-    objectives: [
-      "product_showcase",
-      "trust_building",
-      "credibility",
-      "brand_awareness",
-    ],
+    objectives: ["product_showcase", "trust_building", "credibility", "brand_awareness"],
     demographics: ["professionals", "engineers", "b2b", "mainstream", "35-55"],
-    industries: [
-      "manufacturing",
-      "engineering",
-      "hardware",
-      "automotive",
-      "tools",
-      "trucks",
-    ],
-    moods: [
-      "rugged",
-      "precise",
-      "reliable",
-      "mechanical",
-      "functional",
-      "powerful",
-    ],
+    industries: ["manufacturing", "engineering", "hardware", "automotive", "tools", "trucks"],
+    moods: ["rugged", "precise", "reliable", "mechanical", "functional", "powerful"],
   },
   kinetic: {
     objectives: ["engagement", "viral_content", "brand_awareness"],
     demographics: ["gen_z", "millennials", "creatives", "18-35"],
-    industries: [
-      "music",
-      "events",
-      "entertainment",
-      "festival",
-      "sports",
-      "athletic",
-      "fitness",
-    ],
+    industries: ["music", "events", "entertainment", "festival", "sports", "athletic", "fitness"],
     moods: ["energetic", "dynamic", "bold", "urgent", "rebellious"],
   },
   material: {
@@ -319,13 +269,7 @@ export const STYLE_CHARACTERISTICS: Partial<
   maximalism: {
     objectives: ["engagement", "viral_content", "brand_awareness"],
     demographics: ["gen_z", "millennials", "creatives", "18-30"],
-    industries: [
-      "fashion",
-      "entertainment",
-      "music",
-      "pop_culture",
-      "social_media",
-    ],
+    industries: ["fashion", "entertainment", "music", "pop_culture", "social_media"],
     moods: ["euphoric", "playful", "overwhelming", "vibrant", "chaotic"],
   },
   "modern-dark": {
@@ -354,13 +298,7 @@ export const STYLE_CHARACTERISTICS: Partial<
   terminal: {
     objectives: ["product_launch", "credibility", "tech_innovation"],
     demographics: ["developers", "hackers", "tech_enthusiasts", "18-45"],
-    industries: [
-      "developer_tools",
-      "cybersecurity",
-      "devops",
-      "cloud",
-      "open_source",
-    ],
+    industries: ["developer_tools", "cybersecurity", "devops", "cloud", "open_source"],
     moods: ["technical", "raw", "functional", "hacker", "retro"],
   },
   web3: {
@@ -376,7 +314,7 @@ const missingChars = DESIGN_STYLE_SLUGS.filter(
   (s) => !STYLE_CHARACTERISTICS[s],
 );
 if (missingChars.length > 0) {
-  console.error(
+  logger.error(
     `[design-style-mcp] BUG: ${missingChars.length} styles missing STYLE_CHARACTERISTICS: ${missingChars.join(", ")}`,
   );
 }
@@ -422,7 +360,7 @@ async function _loadDescriptions(): Promise<Map<string, StyleDescription>> {
   for (const line of lines) {
     const match = line.match(/^(.+?)\s*-\s*(.+?)\s*-\s*(https?:\/\/.+)$/);
     if (!match) {
-      console.error(`[loadDescriptions] Skipping unparseable line: "${line}"`);
+      logger.error(`[loadDescriptions] Skipping unparseable line: "${line}"`);
       continue;
     }
 
@@ -430,7 +368,7 @@ async function _loadDescriptions(): Promise<Map<string, StyleDescription>> {
     const slug = nameToSlug(name.trim());
 
     if (!isValidDesignStyleSlug(slug)) {
-      console.error(
+      logger.error(
         `[loadDescriptions] Unrecognised slug derived from name "${name.trim()}": "${slug}"`,
       );
       continue;
@@ -477,7 +415,7 @@ export async function loadPrompt(slug: string): Promise<string | null> {
         ? (error as NodeJS.ErrnoException).code
         : undefined;
     if (code === "ENOENT") {
-      console.error(`[loadPrompt] Prompt file not found: ${filePath}`);
+      logger.error(`[loadPrompt] Prompt file not found: ${filePath}`);
       return null;
     }
     throw new Error(
@@ -562,23 +500,18 @@ export function extractInlinePattern(
 
     // Form 1: **Vibe**: Sophisticated, Timeless...
     const boldLabel = line.match(/\*\*([^*]+)\*\*\s*[:：]\s*(.*)/);
-    if (
-      boldLabel &&
-      kwLower.some((kw) => boldLabel[1].toLowerCase().includes(kw))
-    ) {
+    if (boldLabel && kwLower.some((kw) => boldLabel[1].toLowerCase().includes(kw))) {
       const rest = boldLabel[2].trim();
       if (rest) return rest.slice(0, SECTION_MAX_CHARS);
       // Content on following lines — collect until blank line or next bold label/header
       const collected: string[] = [];
       for (let j = i + 1; j < lines.length; j++) {
         const next = lines[j];
-        if (next.match(/^#{2,4}\s/) || next.match(/^\*\*[^*]+\*\*\s*[:：]/))
-          break;
+        if (next.match(/^#{2,4}\s/) || next.match(/^\*\*[^*]+\*\*\s*[:：]/)) break;
         if (next.trim()) collected.push(next);
         else if (collected.length > 0) break;
       }
-      if (collected.length > 0)
-        return collected.join("\n").slice(0, SECTION_MAX_CHARS);
+      if (collected.length > 0) return collected.join("\n").slice(0, SECTION_MAX_CHARS);
     }
 
     // Form 2: The vibe is **Secure, Technical, and Valuable**.
@@ -586,10 +519,7 @@ export function extractInlinePattern(
       /(?:the\s+)?(?:vibe|mood|aesthetic|emotional\s+intent)\s+is\s+\*\*([^*]+)\*\*/i,
     );
     if (proseVibe) {
-      return proseVibe[1]
-        .trim()
-        .replace(/\.\s*$/, "")
-        .slice(0, SECTION_MAX_CHARS);
+      return proseVibe[1].trim().replace(/\.\s*$/, "").slice(0, SECTION_MAX_CHARS);
     }
   }
 
@@ -620,7 +550,7 @@ export function extractVisualDirectives(lines: string[]): string {
     return extracted.join("\n").slice(0, DIRECTIVES_MAX_CHARS);
   }
 
-  console.error(
+  logger.error(
     `[extractVisualDirectives] No matching sections found. Expected: ${VISUAL_DIRECTIVE_SECTIONS.join(", ")}`,
   );
   return "";
@@ -676,9 +606,8 @@ export async function getStyleTokens(
     name,
     description,
     colors: extractSection(lines, SECTION_KEYWORDS.colors),
-    mood:
-      extractSection(lines, SECTION_KEYWORDS.mood) ??
-      extractInlinePattern(lines, [...SECTION_KEYWORDS.mood, "Intent"]),
+    mood: extractSection(lines, SECTION_KEYWORDS.mood)
+      ?? extractInlinePattern(lines, [...SECTION_KEYWORDS.mood, "Intent"]),
     promptAdditions: extractVisualDirectives(lines),
     negativePrompt: extractSection(lines, SECTION_KEYWORDS.negativePrompt),
     typography: extractSection(lines, SECTION_KEYWORDS.typography),

@@ -27,9 +27,19 @@ Each style includes a full prompt file with design philosophy, color system, typ
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 22.14+
 
 ### Install
+
+Published package: [@luminarylane/design-style-mcp-server on npm](https://www.npmjs.com/package/@luminarylane/design-style-mcp-server)
+
+Run without a global install:
+
+```bash
+npx --yes @luminarylane/design-style-mcp-server
+```
+
+To run from source:
 
 ```bash
 git clone https://github.com/luminarylane/design-style-mcp-server.git
@@ -56,8 +66,8 @@ Add to your `claude_desktop_config.json`:
 {
   "mcpServers": {
     "design-style": {
-      "command": "node",
-      "args": ["/path/to/design-style-mcp-server/dist/index.js"]
+      "command": "npx",
+      "args": ["--yes", "@luminarylane/design-style-mcp-server"]
     }
   }
 }
