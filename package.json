@@ -1,6 +1,6 @@
 {
   "name": "@luminarylane/design-style-mcp-server",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Standalone Design Style MCP Server — recommend and retrieve design style tokens for AI content generation",
   "type": "module",
   "main": "dist/index.js",
