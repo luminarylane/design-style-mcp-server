@@ -1,6 +1,6 @@
 {
   "name": "@luminarylane/design-style-mcp-server",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Standalone Design Style MCP Server — recommend and retrieve design style tokens for AI content generation",
   "type": "module",
   "main": "dist/index.js",
@@ -14,13 +14,28 @@
     "test": "vitest run --passWithNoTests",
     "check": "npm test && npm run build"
   },
-  "files": ["dist", "design-styles", "README.md", "LICENSE", "SECURITY.md"],
-  "engines": { "node": ">=22.14.0" },
-  "repository": { "type": "git", "url": "git+https://github.com/luminarylane/design-style-mcp-server.git" },
-  "bugs": { "url": "https://github.com/luminarylane/design-style-mcp-server/issues" },
+  "files": [
+    "dist",
+    "design-styles",
+    "README.md",
+    "LICENSE",
+    "SECURITY.md"
+  ],
+  "engines": {
+    "node": ">=22.14.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luminarylane/design-style-mcp-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/luminarylane/design-style-mcp-server/issues"
+  },
   "homepage": "https://github.com/luminarylane/design-style-mcp-server#readme",
   "license": "MIT",
-  "publishConfig": { "access": "public" },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",
     "langfuse": "^3.38.20",
